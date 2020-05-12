@@ -12,10 +12,9 @@
     "js-msg": "./cmd.js"
   },
   "dependencies": {
-    "front-matter": "^3.1.0",
+    "front-matter": "^3.2.0",
     "liquid": "^4.0.1",
     "markdown-it": "^10.0.0",
-    "minimist": "^1.2.5",
     "ncp": "^2.0.0"
   }
 }
