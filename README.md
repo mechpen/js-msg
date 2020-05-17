@@ -4,8 +4,8 @@ Minimalist static site generator.
 
 This tool is a general purpose template renderer, with a
 [plugin](https://github.com/mechpen/js-msg/blob/master/plugins/blog/index.js)
-to generate blog sites.  To generate a blog site from `srcDir` to
-`dstDir`:
+to generate static blog sites.  To generate a blog site from `srcDir`
+to `dstDir`:
 
 ```
 npm install js-msg
@@ -20,9 +20,10 @@ The core of the tool does 2 things in order:
 
 ## Data merging
 
-Each directory could have a file `.data.yaml` that defines data at the
-directory level.  A source file could define data in its front matter
-as in [jelyll](https://jekyllrb.com/docs/front-matter/).
+A directory could have a file `.data.yaml` that defines data at the
+directory level.  A file could define data in its front matter as in
+[jelyll](https://jekyllrb.com/docs/front-matter/).  Directory data and
+file data are merged to get the data to rendering the file.
 
 Data merging follows the "longest prefix rule".  When there are
 conflicting keys, the value associates with the longest prefix of the
@@ -33,16 +34,16 @@ concatenated with duplicates removed.
 
 ## Page rendering
 
-Variable `template` of a file specifies the [liquid] template of this
-file.  The rendering is performed recursively until `template`
-variable is not defined or `null`.
+The variable `template` of a file specifies the [liquid] template of
+this file.  The rendering is performed recursively until the
+`template` variable is not defined or `null`.
 
-Before rendering each template, the template data and source data are
-merged.  The source data takes precedence over template data.
+Before rendering a template, the template data and source data are
+merged.  The source data takes precedence over the template data.
 
 ## Special data keys
 
-The following data keys have special meaning, and should not be used
+The following data keys have special meanings, and should not be used
 for other purposes:
 
 | key           | description |
@@ -59,8 +60,8 @@ for other purposes:
 
 ## Config file
 
-Config file should be a javascript file.  It is specified with the
-command argument `--config` with default value `.js-msg.js`.
+Config file is a javascript file.  It is specified with the command
+argument `--config` with default value `.js-msg.js`.
 
 The config file should export a function that take a config object.
 The config object contains the following:
@@ -69,8 +70,8 @@ The config object contains the following:
   examples are
   [here](https://github.com/mechpen/mechpen.github.io/blob/src/.js-msg.js#L6-L7)
 
-- `processors`: an object that contains the following.  The values of
-  this object can be updated by the user config function.
+- `processors`: an object that contains the following.  The values can
+  be updated by the user config function.
 
   - `pre`: a function to preprocess source pages
 
@@ -78,9 +79,13 @@ The config object contains the following:
     is complete.
 
   - `exts`: a map from file extensions to processors.  A processor is
-    run after a source file or a template file with the corresponding
-    extension is rendered.  For example, a key could be ".md", and its
-    value is a function to convert markdown to html.
+    run after a file with the corresponding extension is rendered.
+    For example, the value of ".md" is a function to convert markdown
+    to html.
+
+The processor function has prototype `(content, data) => newContent`.
+`data` is modified in place.  A `null` processor is the same as `(x)
+=> x`.
 
 As an example, the "blog" plugin is implemented as a [config
 file](https://github.com/mechpen/js-msg/blob/master/plugins/blog/index.js).
@@ -92,9 +97,8 @@ Page source files are collected from `srcDir`.  Files under
 the `exts` map is selected.
 
 Page output files are created in `dstDir` with the same relative path
-as source files.  The file extension of an output file is replaced
-with the extension of the last template file used to generate this
-output.
+as source files.  The output file extension is the extension of the
+last template file used to generate the output.
 
 The files or dirs listed in `copyThrough` are copied from `srcDir` to
 `dstDir` with the same relative path.
