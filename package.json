@@ -1,20 +1,28 @@
 {
   "name": "js-msg",
   "description": "Minimalist static site generator",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/mechpen/js-msg.git"
   },
+  "homepage": "https://github.com/mechpen/js-msg#readme",
   "main": "lib/index.js",
   "bin": {
     "js-msg": "./cmd.js"
   },
+  "scripts": {
+    "lint": "npx eslint ."
+  },
   "dependencies": {
     "front-matter": "^3.2.0",
+    "js-yaml": "^3.13.1",
     "liquid": "^4.0.1",
     "markdown-it": "^10.0.0",
     "ncp": "^2.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.0.0"
   }
 }
