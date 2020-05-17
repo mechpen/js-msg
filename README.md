@@ -23,7 +23,7 @@ The core of the tool does 2 things in order:
 A directory could have a file `.data.yaml` that defines data at the
 directory level.  A file could define data in its front matter as in
 [jelyll](https://jekyllrb.com/docs/front-matter/).  Directory data and
-file data are merged to get the data to rendering the file.
+file data are merged to get the rendering data.
 
 Data merging follows the "longest prefix rule".  When there are
 conflicting keys, the value associates with the longest prefix of the
@@ -36,7 +36,7 @@ concatenated with duplicates removed.
 
 The variable `template` of a file specifies the [liquid] template of
 this file.  The rendering is performed recursively until the
-`template` variable is not defined or `null`.
+`template` variable is not defined or is `null`.
 
 Before rendering a template, the template data and source data are
 merged.  The source data takes precedence over the template data.
@@ -60,11 +60,11 @@ for other purposes:
 
 ## Config file
 
-Config file is a javascript file.  It is specified with the command
+The config file is a javascript file.  It is specified with the command
 argument `--config` with default value `.js-msg.js`.
 
-The config file should export a function that take a config object.
-The config object contains the following:
+The config javascript file should export a function that take a config
+object.  The config object contains the following:
 
 - `addLiquidTag`: a function to create a new liquid Tag.  Some
   examples are
@@ -80,7 +80,7 @@ The config object contains the following:
 
   - `exts`: a map from file extensions to processors.  A processor is
     run after a file with the corresponding extension is rendered.
-    For example, the value of ".md" is a function to convert markdown
+    For example, the value of `.md` is a function to convert markdown
     to html.
 
 The processor function has prototype `(content, data) => newContent`.
@@ -94,11 +94,11 @@ file](https://github.com/mechpen/js-msg/blob/master/plugins/blog/index.js).
 
 Page source files are collected from `srcDir`.  Files under
 `templateDir` and `copyThrough` are skipped.  Files with extensions in
-the `exts` map is selected.
+the `exts` map are collected.
 
 Page output files are created in `dstDir` with the same relative path
-as source files.  The output file extension is the extension of the
-last template file used to generate the output.
+as their source files.  The output file extension is the extension of
+the last template file used to generate the output.
 
 The files or dirs listed in `copyThrough` are copied from `srcDir` to
 `dstDir` with the same relative path.

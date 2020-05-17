@@ -48,7 +48,9 @@ function checkArgs() {
     plugins.push("blog")
   }
   for (const plugin of plugins) {
-    msg.runConfig(require("./plugins/" + plugin))
+    if (plugin !== "null") {
+      msg.runConfig(require("./plugins/" + plugin))
+    }
   }
 
   if (config !== null) {
