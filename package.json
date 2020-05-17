@@ -8,6 +8,11 @@
     "url": "https://github.com/mechpen/js-msg.git"
   },
   "homepage": "https://github.com/mechpen/js-msg#readme",
+  "keywords": [
+    "static-site-generator",
+    "minimalist",
+    "liquid"
+  ],
   "main": "lib/index.js",
   "bin": {
     "js-msg": "./cmd.js"
