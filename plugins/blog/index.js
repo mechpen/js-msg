@@ -1,12 +1,16 @@
 const path = require("path")
 
-const dateRe = /^(\d{4}-\d{2}-\d{2})-.*/
+const dateRes = [
+  /\/(\d{4})-(\d{2})-(\d{2})-/,
+  /\/(\d{4})\/(\d{2})-(\d{2})-/,
+  /\/(\d{4})\/(\d{2})\/(\d{2})-/,
+]
 
 function guessDate(url) {
-  for (const name of url.split("/").reverse()) {
-    let mo = name.match(dateRe)
+  for (const re of dateRes) {
+    let mo = url.match(re)
     if (mo !== null) {
-      return Date.parse(mo[1])
+      return new Date(mo[1], mo[2]-1, mo[3])
     }
   }
 }
@@ -18,6 +22,7 @@ function addData(content, data) {
   }
 
   data.url = "/" + url.split(path.sep).join("/")
+  data.url = data.url.replace(/index\.html$/, "")
   data.date = guessDate(data.url)
 
   return content
