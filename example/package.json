@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "build": "npx js-msg src public"
+  },
+  "devDependencies": {
+    "js-msg": ".."
+  }
+}

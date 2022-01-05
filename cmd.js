@@ -2,13 +2,11 @@
 
 const fs = require("fs")
 const path = require("path")
-const msg = require("./lib")
+const jsmsg = require("./lib")
 
 function printUsageAndExit(code) {
   console.log("Available args:")
   console.log("  --help         print usage and exit")
-  console.log("  --data         print data and exit")
-  console.log("  --srcRe re     run build only for sources match re")
   console.log("  --plugin       plugin to use, default is 'blog'")
   console.log("  --config       user config file, default is '.js-msg.js'")
   console.log("  srcDir         source dir")
@@ -20,15 +18,10 @@ function checkArgs() {
   let args = process.argv.slice(2)
   let config = null
   let plugins = []
-  let options = {}
   let leftover = []
 
   for (var i = 0; i < args.length; i++) {
-    if (args[i] === "--data") {
-      options.data = true
-    } else if (args[i] === "--srcRe") {
-      options.srcRe = args[++i]
-    } else if (args[i] === "--plugin") {
+    if (args[i] === "--plugin") {
       plugins.push(args[++i])
     } else if (args[i] === "--config") {
       config = args[++i]
@@ -49,29 +42,29 @@ function checkArgs() {
   }
   for (const plugin of plugins) {
     if (plugin !== "null") {
-      msg.runConfig(require("./plugins/" + plugin))
+      jsmsg.runConfig(require("./plugins/" + plugin))
     }
   }
 
   if (config !== null) {
-    msg.runConfig(path.resolve(process.cwd(), config))
+    jsmsg.runConfig(path.resolve(process.cwd(), config))
   } else {
     config = path.resolve(process.cwd(), ".js-msg.js")
     if (fs.existsSync(config)) {
-      msg.runConfig(require(config))
+      jsmsg.runConfig(require(config))
     }
   }
 
   let srcDir = leftover[0]
   let dstDir = leftover[1]
 
-  return {srcDir, dstDir, options}
+  return {srcDir, dstDir}
 }
 
 async function main() {
-  let {srcDir, dstDir, options} = checkArgs()
+  let {srcDir, dstDir} = checkArgs()
   try {
-    await msg.genSite(srcDir, dstDir, options)
+    await jsmsg.genSite(srcDir, dstDir)
   } catch (e) {
     console.log(e)
   }

@@ -16,9 +16,9 @@ function guessDate(url) {
 }
 
 function addData(content, data) {
-  let url = data.source.replace(".md", ".html")
+  let url = data._source.replace(".md", ".html")
   if (path.extname(url) !== ".html") {
-    throw "Invalid source file extension: " + data.source
+    throw "Invalid source file extension: " + data._source
   }
 
   data.url = "/" + url.split(path.sep).join("/")

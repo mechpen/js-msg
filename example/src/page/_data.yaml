@@ -1,0 +1,4 @@
+_evalVars:
+  pn_list: _.range(1, 1+Math.ceil(posts.length/postsPerPage))
+
+postsPerPage: 2

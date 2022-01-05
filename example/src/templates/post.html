@@ -1,0 +1,22 @@
+---
+_template: default.html
+
+---
+
+<div class="post">
+  <h1>{{ title }}</h1>
+
+  <div class="post-info">
+    <div class="date">
+      {{ date | date: "%Y/%m/%d" }}
+    </div>
+    <div class="category">
+      {{ category }}
+    </div>
+  </div>
+
+  <div class="entry">
+    {{ _input }}
+  </div>
+</div>
+<div class="vskip"></div>

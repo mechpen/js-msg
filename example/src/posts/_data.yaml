@@ -1,0 +1,5 @@
+_template: post.html
+_copyThrough:
+  - "**/*.jpg"
+
+type: post

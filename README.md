@@ -20,7 +20,7 @@ The core of the tool does 2 things in order:
 
 ## Data merging
 
-A directory could have a file `.data.yaml` that defines data at the
+A directory could have a file `_data.yaml` that defines data at the
 directory level.  A file could define data in its front matter as in
 [jelyll](https://jekyllrb.com/docs/front-matter/).  Directory data and
 file data are merged to get the rendering data.
@@ -29,14 +29,11 @@ Data merging follows the "longest prefix rule".  When there are
 conflicting keys, the value associates with the longest prefix of the
 path wins.
 
-If the values of a conflicting key are arrays, then the arrays are
-concatenated with duplicates removed.
-
 ## Page rendering
 
-The variable `template` of a file specifies the [liquid] template of
+The variable `_template` of a file specifies the [liquid] template of
 this file.  The rendering is performed recursively until the
-`template` variable is not defined or is `null`.
+`_template` variable is not defined.
 
 Before rendering a template, the template data and source data are
 merged.  The source data takes precedence over the template data.
@@ -46,17 +43,19 @@ merged.  The source data takes precedence over the template data.
 The following data keys have special meanings, and should not be used
 for other purposes:
 
-| key           | description |
-| ------------- | ----------- |
-| `srcDir`      | source dir |
-| `dstDir`      | destination dir |
-| `source`      | source file path, relative to `srcDir` |
-| `content`     | page content |
-| `current`     | current rendering file path, could be `source` or a template file |
-| `allpages`    | list of all pages data |
-| `template`    | template of a file |
-| `templateDir` | dir to look for template, relative to the current file dir |
-| `copyThrough` | dir or file to copy through, relative to the `.data.yaml` file dir |
+| key            | description |
+| -------------- | ----------- |
+| `_srcDir`      | source dir |
+| `_dstDir`      | destination dir |
+| `_source`      | source file path, relative to `_srcDir` |
+| `_current`     | current rendering file path, could be `_source` or a template file |
+| `_body`        | template body |
+| `_input`       | template input, or result of the previous template |
+| `_template`    | template of a file |
+| `_templateDir` | dir to look for template, relative to the current file dir |
+| `_copyThrough` | dirs or files to copy through, relative to the `_data.yaml` file dir |
+| `_srcPages`    | list of all source pages |
+| `_evalVars`    | variables that are evalulated in js |
 
 ## Config file
 
@@ -92,19 +91,19 @@ file](https://github.com/mechpen/js-msg/blob/master/plugins/blog/index.js).
 
 ## File mappings
 
-Page source files are collected from `srcDir`.  Files under
-`templateDir` and `copyThrough` are skipped.  Files with extensions in
-the `exts` map are collected.
+Page source files are collected from `_srcDir`.  Files under
+`_templateDir` and `_copyThrough` are skipped.  Files with extensions
+in the `exts` map are collected.
 
-Page output files are created in `dstDir` with the same relative path
+Page output files are created in `_dstDir` with the same relative path
 as their source files.  The output file extension is the extension of
 the last template file used to generate the output.
 
-The files or dirs listed in `copyThrough` are copied from `srcDir` to
-`dstDir` with the same relative path.
+The files or dirs listed in `_copyThrough` are copied from `_srcDir` to
+`_dstDir` with the same relative path.
 
-## Full example
+## Example
 
-https://github.com/mechpen/mechpen.github.io
+[Here](example) is an blog example that has pagination and categories.
 
 [liquid]: https://shopify.github.io/liquid/
