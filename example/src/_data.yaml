@@ -2,5 +2,5 @@ _templateDir: templates
 _copyThrough:
   - index.html
 _evalVars:
-  posts: _.sortBy(_srcPages.filter(x => x.type === "post"), "date").reverse()
-  category_list: _.uniq(posts.map(x => x.category)).sort()
+  - posts: _.sortBy(_srcPages.filter(x => x.type === "post"), "date").reverse()
+  - category_list: _.uniq(posts.map(x => x.category)).sort()

@@ -1,7 +1,7 @@
 _copyThrough:
   - index.html
 _evalVars:
-  posts: posts.filter(x => x.category === category)
-  pn_list: _.range(1, 1+Math.ceil(posts.length/postsPerPage))
+  - posts: posts.filter(x => x.category === category)
+  - pn_list: _.range(1, 1+Math.ceil(posts.length/postsPerPage))
 
 postsPerPage: 2
