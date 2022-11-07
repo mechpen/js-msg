@@ -18,7 +18,7 @@
     "js-msg": "./cmd.js"
   },
   "scripts": {
-    "lint": "npx eslint ."
+    "lint": "npx eslint cmd.js lib/ plugins/"
   },
   "devDependencies": {
     "eslint": "^7.0.0"
